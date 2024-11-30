@@ -1,0 +1,563 @@
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>List Wildcard | prstyaDev</title> 
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4C+6PCWJ+8zzHcXQjXGp6n5Yh9rX0x5fOdPaOqO+e2X4R5C1aE/BSqPIG+8y3O6APa8w==" crossorigin="anonymous" referrerpolicy="no-referrer"> 
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('https://w0.peakpx.com/wallpaper/54/229/HD-wallpaper-anime-anime-girls-digital-art-2d-portrait-display-vertical-artwork.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 80%;
+            margin-top: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            animation: fadeIn 1s ease-in-out;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 15, 15, 0.4);
+            z-index: -1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            color: #00a8ff;
+            margin: 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .nav-buttons .button {
+            background-color: transparent;
+            border: 2px solid #00a8ff;
+            color: #00a8ff;
+            padding: 6px 12px;
+            font-size: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-buttons .button:hover {
+            background-color: #00a8ff;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .content.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .config-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .config-section h3 {
+            margin-top: 0;
+            color: #e1b12c;
+            font-size: 28px;
+        }
+
+        .config-section p {
+            color: #f5f5f5;
+            font-size: 16px;
+        }
+
+        .config-toggle {
+            margin-bottom: 20px;
+        }
+
+        .config-content {
+            display: none;
+        }
+
+        .config-content.active {
+            display: block;
+        }
+
+        .config-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .config-block h4 {
+            margin-bottom: 8px;
+            color: #f39c12;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .config {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+            border: 2px solid #00a8ff;
+            color: #f5f5f5;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 15px;
+        }
+        .button {
+            background-color: transparent;
+            border: 2px solid #00a8ff;
+            color: #00a8ff;
+            padding: 4px 8px;
+            font-size: 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-right: 4px;
+        }
+
+        .button i {
+            margin-right: 3px;
+        }
+
+        .button:hover {
+            background-color: #00a8ff;
+            color: #fff;
+            transform: scale(1.0);
+        }
+
+        .config-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #fff, transparent);
+            margin: 40px 0;
+        }
+        .watermark {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+            text-align: center;
+        }
+        .watermark a {
+            color: #ffa500;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .watermark a:hover {
+            color: #ffa500;
+        }
+        .domain-list {
+            color: #f5f5f5;
+            font-size: 10px;
+            list-style: none;
+            padding-left: 0;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .domain-list li {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .domain-list li:hover {
+            transform: translateX(8px);
+        }
+
+        .domain-list li::before {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 650;
+            position: absolute;
+            left: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00a8ff;
+        }
+
+        .domain-number {
+            font-weight: bold;
+            color: #00a8ff;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .config-section h3 {
+                font-size: 24px;
+            }
+
+            .config-block h4 {
+                font-size: 20px;
+            }
+
+            .domain-list {
+                font-size: 10px;
+            }
+            
+            .watermark {
+              position: absolute;
+              bottom: 10px;
+            }
+        }
+    </style> 
+ </head> 
+ <body> 
+  <div class="overlay"></div> 
+  <div class="container"> 
+   <div class="header"> 
+    <h1>Wildcard Desu!</h1> 
+    <p>All Server Sudah Support Wildcard
+    <br/>Request Bug lain? PM Admin</p> 
+   </div> 
+   <div class="nav-buttons"> 
+    <button class="button" onclick="showContent('clash')">Sett Wildcard</button> 
+    <button class="button" onclick="showContent('domains')">List Bug Wildcard</button> 
+   </div> 
+   <div id="vless" class="content"> 
+    <div class="config-section"> 
+     <p><strong>ISP:</strong> Biznet (ID)</p> 
+     <hr> 
+     <div class="config-toggle"> 
+      <button class="button" onclick="toggleConfig(this, 'show vless', 'hide vless')">Show Vless</button> 
+      <div class="config-content"> 
+       <div class="config-block"> 
+        <h3>TLS:</h3> 
+        <p class="config">vless://de8ab2ab-7c9a-4d2b-8254-cfb628bca05b@kepergoksaat.edydanjekibuatvideomesum.live:443?security=tls&amp;type=ws&amp;headerType=&amp;path=%2Fvless&amp;host=kepergoksaat.edydanjekibuatvideomesum.live&amp;sni=kepergoksaat.edydanjekibuatvideomesum.live&amp;fp=chrome&amp;alpn=http%2F1.1#%28EdyHitam%29%20%5BVLESS%20-%20ws%5D%20TLS%20%E2%9C%85</p> 
+        <button class="button" onclick="copyToClipboard(&quot;vless://de8ab2ab-7c9a-4d2b-8254-cfb628bca05b@kepergoksaat.edydanjekibuatvideomesum.live:443?security=tls&amp;type=ws&amp;headerType=&amp;path=%2Fvless&amp;host=kepergoksaat.edydanjekibuatvideomesum.live&amp;sni=kepergoksaat.edydanjekibuatvideomesum.live&amp;fp=chrome&amp;alpn=http%2F1.1#%28EdyHitam%29%20%5BVLESS%20-%20ws%5D%20TLS%20%E2%9C%85&quot;)"><i class="fa fa-clipboard"></i>Copy</button> 
+       </div> 
+       <hr> 
+       <div class="config-block"> 
+        <h3>NTLS:</h3> 
+        <p class="config">vless://de8ab2ab-7c9a-4d2b-8254-cfb628bca05b@kepergoksaat.edydanjekibuatvideomesum.live:80?security=none&amp;type=ws&amp;headerType=&amp;path=%2Fvless&amp;host=kepergoksaat.edydanjekibuatvideomesum.live#%28EdyHitam%29%20%5BVLESS%20-%20ws%5D%20nonTLS%20%E2%9C%85</p> 
+        <button class="button" onclick="copyToClipboard(&quot;vless://de8ab2ab-7c9a-4d2b-8254-cfb628bca05b@kepergoksaat.edydanjekibuatvideomesum.live:80?security=none&amp;type=ws&amp;headerType=&amp;path=%2Fvless&amp;host=kepergoksaat.edydanjekibuatvideomesum.live#%28EdyHitam%29%20%5BVLESS%20-%20ws%5D%20nonTLS%20%E2%9C%85&quot;)"><i class="fa fa-clipboard"></i>Copy</button> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <hr class="config-divider"> 
+   </div> 
+   <div id="clash" class="content"> 
+    <div style="display: none;"> 
+     <textarea id="clashTls/Trojan">proxies :
+   - name: XCL TLS ✅
+     server: ava.game.naver.com
+     port: 443
+     type: trojan
+     password: UUID AKUNMU
+     skip-cert-verify: true
+     sni: ava.game.naver.com.domain-akunmu.net
+     network: ws
+     ws-opts:
+       path: /trojan
+       headers:
+         Host: ava.game.naver.com.domain-akunmu.net
+     udp: true</textarea> 
+    </div> 
+    <div style="display: none;"> 
+     <textarea id="clashTls/Trojan2">proxies :
+    - name: XCVIP YT TLS ✅
+      server: support.zoom.us
+      port: 443
+      type: trojan
+      password: UUID AKUNMU
+      skip-cert-verify: true
+      sni: zoomgov.com.domain-akunmu.net
+      network: ws
+      ws-opts:
+        path: /trojan
+        headers:
+          Host: zoomgov.com.domain-akunmu.net
+      udp: true</textarea> 
+    </div> 
+    <div style="display: none;"> 
+     <textarea id="clashTls/Trojan3">proxies :
+    - name: VIU TLS ✅
+      server: zaintest.vuclip.com
+      port: 443
+      type: trojan
+      password: UUID AKUNMU
+      skip-cert-verify: true
+      sni: zaintest.vuclip.com.domain-akunmu.net
+      network: ws
+      ws-opts:
+        path: /trojan
+        headers:
+          Host: zaintest.vuclip.com.domain-akunmu.net
+      udp: true</textarea> 
+    </div> 
+    <div class="config-section"> 
+     <p><strong>❏ All Prokontol</strong> Bisa Gak Harus <strong>VLESS</strong></p> 
+     <p>❏ Bug lain tinggal sesuaikan aja yang ada di <strong>list wilcard</strong></p> 
+     <p>❏ Terutama <strong>TKP Jabar Kebarat.</strong> TKP lain juga boleh mencoba</p> 
+     <hr> 
+     <div class="config-toggle"> 
+      <button class="button" onclick="toggleConfig(this, 'show clash', 'hide clash')">Show Clash</button> 
+      <div class="config-content"> 
+       <div class="config-block"> 
+        <h3>Contoh Set XCL :</h3> 
+        <p class="config">proxies: - name: XCL TLS ✅ server: ava.game.naver.com port: 443 type: trojan password: UUID AKUNMU skip-cert-verify: true sni: ava.game.naver.com.domain-akunmu.net network: ws ws-opts: path: /trojan headers: Host: ava.game.naver.com.domain-akunmu.net udp: true</p> 
+        <button class="button" onclick="copyClash(&quot;clashTls/Trojan&quot;)"><i class="fa fa-clipboard"></i>Copy</button> 
+       </div> 
+       <div class="config-block"> 
+        <h3>Contoh Set XCVIP :</h3> 
+        <p class="config">proxies: - name: XCVIP YT TLS ✅ server: support.zoom.us port: 443 type: trojan password: UUID AKUNMU skip-cert-verify: true sni: zoomgov.com.domain-akunmu.net network: ws ws-opts: path: /trojan headers: Host: zoomgov.com.domain-akunmu.net udp: true</p> 
+        <button class="button" onclick="copyClash(&quot;clashTls/Trojan2&quot;)"><i class="fa fa-clipboard"></i>Copy</button> 
+       </div> 
+       <div class="config-block"> 
+        <h3>Contoh Set Viu :</h3> 
+        <p class="config">proxies: - name: VIU TLS ✅ server: zaintest.vuclip.com port: 443 type: trojan password: UUID AKUNMU skip-cert-verify: true sni: zaintest.vuclip.com.domain-akunmu.net network: ws ws-opts: path: /trojan headers: Host: zaintest.vuclip.com.domain-akunmu.net udp: true</p> 
+        <button class="button" onclick="copyClash(&quot;clashTls/Trojan3&quot;)"><i class="fa fa-clipboard"></i>Copy</button> 
+       </div> 
+       <hr> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <div id="domains" class="content active"> 
+    <ul class="domain-list"> 
+     <li> <span class="domain-number">1</span> app.gopay.co.id <button class="button" onclick="copyToClipboard(&quot;app.gopay.co.id&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">2</span> api.blibli.com <button class="button" onclick="copyToClipboard(&quot;api.blibli.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">3</span> api.midtrans.com <button class="button" onclick="copyToClipboard(&quot;api.midtrans.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">4</span> ava.game.naver.com <button class="button" onclick="copyToClipboard(&quot;ava.game.naver.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">5</span> belajar.ruangguru.com <button class="button" onclick="copyToClipboard(&quot;belajar.ruangguru.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">6</span> bimbel.ruangguru.com <button class="button" onclick="copyToClipboard(&quot;bimbel.ruangguru.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">7</span> blog.webex.com <button class="button" onclick="copyToClipboard(&quot;blog.webex.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">8</span> cf.shopee.co.id.sea-sw.swiftserve.com <button class="button" onclick="copyToClipboard(&quot;cf.shopee.co.id.sea-sw.swiftserve.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">9</span> data.mt <button class="button" onclick="copyToClipboard(&quot;data.mt&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">10</span> df.game.naver.com <button class="button" onclick="copyToClipboard(&quot;df.game.naver.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">11</span> edu.ruangguru.com <button class="button" onclick="copyToClipboard(&quot;edu.ruangguru.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">12</span> email.udemy.com <button class="button" onclick="copyToClipboard(&quot;email.udemy.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">13</span> graph.instagram.com <button class="button" onclick="copyToClipboard(&quot;graph.instagram.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">14</span> img.email1.vidio.com <button class="button" onclick="copyToClipboard(&quot;img.email1.vidio.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">15</span> info.udemy.com <button class="button" onclick="copyToClipboard(&quot;info.udemy.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">16</span> investor.fb.com <button class="button" onclick="copyToClipboard(&quot;investor.fb.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">17</span> investors.spotify.com <button class="button" onclick="copyToClipboard(&quot;investors.spotify.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">18</span> io.ruangguru.com <button class="button" onclick="copyToClipboard(&quot;io.ruangguru.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">19</span> live.iflix.com <button class="button" onclick="copyToClipboard(&quot;live.iflix.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">20</span> microsoft.com <button class="button" onclick="microsoft.com(&quot;cf.shopee.co.id.sea-sw.swiftserve.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">21</span> npca.netflix.com <button class="button" onclick="copyToClipboard(&quot;npca.netflix.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">22</span> onelink.seabank.co.id <button class="button" onclick="copyToClipboard(&quot;onelink.seabank.co.id&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">23</span> quiz.int.vidio.com <button class="button" onclick="copyToClipboard(&quot;quiz.int.vidio.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">24</span> quiz.staging.vidio.com <button class="button" onclick="copyToClipboard(&quot;quiz.staging.vidio.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">25</span> s.blibli.com <button class="button" onclick="copyToClipboard(&quot;s.blibli.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">26</span> sogood.linefriends.com <button class="button" onclick="copyToClipboard(&quot;sogood.linefriends.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">27</span> support.zoom.us <button class="button" onclick="copyToClipboard(&quot;support.zoom.us&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">28</span> us04web.zoom.us <button class="button" onclick="copyToClipboard(&quot;us04web.zoom.us&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">29</span> zaintest.vuclip.com <button class="button" onclick="copyToClipboard(&quot;zaintest.vuclip.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+     <li> <span class="domain-number">30</span> zoomgov.com <button class="button" onclick="copyToClipboard(&quot;zoomgov.com&quot;)"> <i class="fa fa-clipboard"></i>Copy </button> </li> 
+    </ul> 
+   </div> 
+  </div> 
+  <div class="watermark">
+   © 
+   <a href="https://t.me/prstyaDev" target="_blank">Your Rival Store</a>
+  </div> 
+  <script>
+        function showContent(contentId) {
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(contentId).classList.add('active');
+        }
+        function salinTeks() {
+            var teks = document.getElementById('teksAsli');
+            teks.select();
+            document.execCommand('copy');
+            alert('Teks telah disalin.');
+        }
+        function copyClash(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text)
+            .then(() => {
+            const alertBox = document.createElement('div');
+            alertBox.textContent = "Copied! ";
+            alertBox.style.position = 'fixed';
+            alertBox.style.bottom = '20px';
+            alertBox.style.right = '20px';
+            alertBox.style.backgroundColor = '#00a8ff';
+            alertBox.style.color = '#fff';
+            alertBox.style.padding = '10px 20px';
+            alertBox.style.borderRadius = '5px';
+            alertBox.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            alertBox.style.opacity = '0';
+            alertBox.style.transition = 'opacity 0.5s ease-in-out';
+            document.body.appendChild(alertBox);
+            setTimeout(() => {
+                alertBox.style.opacity = '1';
+            }, 100);
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(alertBox);
+                }, 500);
+            }, 2000);
+        })
+        .catch((err) => {
+            console.error("Failed to copy to clipboard:", err);
+        });
+        }
+function fetchAndDisplayAlert(path) {
+    fetch(path)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const proxyStatus = data.proxyStatus || "Unknown status";
+            const alertBox = document.createElement('div');
+            alertBox.textContent = `Proxy Status: ${proxyStatus}`;
+            alertBox.style.position = 'fixed';
+            alertBox.style.bottom = '20px';
+            alertBox.style.right = '20px';
+            alertBox.style.backgroundColor = '#00a8ff';
+            alertBox.style.color = '#fff';
+            alertBox.style.padding = '10px 20px';
+            alertBox.style.borderRadius = '5px';
+            alertBox.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            alertBox.style.opacity = '0';
+            alertBox.style.transition = 'opacity 0.5s ease-in-out';
+            document.body.appendChild(alertBox);
+            
+            setTimeout(() => {
+                alertBox.style.opacity = '1';
+            }, 100);
+            
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(alertBox);
+                }, 500);
+            }, 2000);
+        })
+        .catch((err) => {
+            alert("Failed to fetch data or invalid response.");
+        });
+}
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    const alertBox = document.createElement('div');
+                    alertBox.textContent = "Copied!";
+                    alertBox.style.position = 'fixed';
+                    alertBox.style.bottom = '20px';
+                    alertBox.style.right = '20px';
+                    alertBox.style.backgroundColor = '#00a8ff';
+                    alertBox.style.color = '#fff';
+                    alertBox.style.padding = '10px 20px';
+                    alertBox.style.borderRadius = '5px';
+                    alertBox.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                    alertBox.style.opacity = '0';
+                    alertBox.style.transition = 'opacity 0.5s ease-in-out';
+                    document.body.appendChild(alertBox);
+                    setTimeout(() => {
+                        alertBox.style.opacity = '1';
+                    }, 100);
+                    setTimeout(() => {
+                        alertBox.style.opacity = '0';
+                        setTimeout(() => {
+                            document.body.removeChild(alertBox);
+                        }, 500);
+                    }, 2000);
+                })
+                .catch((err) => {
+                    console.error("Failed to copy to clipboard:", err);
+                });
+        }
+
+        function toggleConfig(button, show, hide) {
+            const configContent = button.nextElementSibling;
+            if (configContent.classList.contains('active')) {
+                configContent.classList.remove('active');
+                button.textContent = show;
+            } else {
+                configContent.classList.add('active');
+                button.textContent = hide;
+            }
+        }
+    </script> 
+ </body>
+</html>
